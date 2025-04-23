@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json;
 using BC = BCrypt.Net.BCrypt;
 
 namespace AuthService.Application.Services.Implementation
@@ -70,7 +71,7 @@ namespace AuthService.Application.Services.Implementation
                 new Claim(JwtRegisteredClaimNames.Sub, user.Name),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim("Roles", string.Join(",",user.Roles))
+                new Claim("Roles", string.Join(",",user.Roles)),
             };
 
             var jwtToken = new JwtSecurityToken(

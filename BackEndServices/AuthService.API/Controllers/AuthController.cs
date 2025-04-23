@@ -1,6 +1,5 @@
 ﻿using AuthService.Application.DTO;
 using AuthService.Application.Services.Abstractions;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuthService.API.Controllers
@@ -42,5 +41,6 @@ namespace AuthService.API.Controllers
                 return BadRequest("User already exists");
             }
         }
+
     }
 }

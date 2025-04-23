@@ -2,7 +2,7 @@
 
 
 ### Register User
-POST {{AuthService.API_HostAddress}}/Auth/Register
+POST {{AuthService.API_HostAddress}}/auth/Register
 Accept: application/json
 content-Type:application/json
 {
@@ -14,7 +14,7 @@ content-Type:application/json
 }
 
 ### Login User
-POST {{AuthService.API_HostAddress}}/Auth/Login
+POST {{AuthService.API_HostAddress}}/auth/Login
 Accept: application/json
 content-Type:application/json
 {
