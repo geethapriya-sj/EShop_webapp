@@ -11,7 +11,35 @@
       ],
       "UpstreamPathTemplate": "/auth/{everything}",
       "UpstreamHttpMethod": [ "Post" ]
-    }
+    },
+
+    {
+      "DownstreamPathTemplate": "/api/ProductCatalog/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7174
+        }
+      ],
+      "UpstreamPathTemplate": "/ProductCatalog/{everything}",
+      "UpstreamHttpMethod": [ "Post", "Get" ]
+    },
+
+    {
+      "DownstreamPathTemplate": "/api/cart/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7051
+        }
+      ],
+      "UpstreamPathTemplate": "/cart/{everything}",
+      "UpstreamHttpMethod": [ "Post", "Get" , "PUT" , "DELETE"]
+    } 
+
+
   ],
   "GlobalConfiguration": {
     "BaseUrl": "https://localhost:72324"

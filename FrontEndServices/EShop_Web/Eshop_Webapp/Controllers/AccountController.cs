@@ -16,27 +16,30 @@ namespace Eshop_Webapp.Controllers
             _authServiceClients = authServiceClients;
         }
 
+
+        public IActionResult Login()
+        {
+            return View();
+        }
+
         [HttpPost]
-        public async Task<IActionResult> Login(LoginModel model)
+        public async Task<IActionResult> Login(LoginModel model,string? returnUrl)
         {
             if (ModelState.IsValid)
             {
                 var user = await _authServiceClients.LoginAsync(model);
                 if (user != null)
                 {
-                    if(user.Roles != null && user.Roles.Contains("User"))
+                    GenerateTicket(user);
+                    if (!string.IsNullOrEmpty(returnUrl))
                     {
-                        GenerateTicket(user);
+                        return Redirect(returnUrl);
+                    }
+                    else if (user.Roles != null && user.Roles.Contains("User"))
+                    {
+                        
                         return RedirectToAction("Index", "Home",new {area = "User"});
                     }
-                    else
-                    {
-                        ModelState.AddModelError("", "You are not authorized to access this application.");
-                    }
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Invalid login attempt.");
                 }
             }
             return View();

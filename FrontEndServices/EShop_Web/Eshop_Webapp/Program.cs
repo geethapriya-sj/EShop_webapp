@@ -18,6 +18,14 @@ builder.Services.AddScoped<AuthServiceClients>(provider =>
     return new AuthServiceClients(httpClient);
 }
 );
+
+builder.Services.AddScoped<CatalogServiceClient>(provider =>
+{
+    var httpClientFactory = provider.GetRequiredService<IHttpClientFactory>();
+    var httpClient = httpClientFactory.CreateClient("HttpClient");
+    return new CatalogServiceClient(httpClient);
+}
+);
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {

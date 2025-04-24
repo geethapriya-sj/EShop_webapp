@@ -1,21 +1,24 @@
-﻿using Eshop_Webapp.Models;
+﻿using Eshop_Webapp.HttpClients;
+using Eshop_Webapp.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace Eshop_Webapp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly CatalogServiceClient _catalogServiceClient;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(CatalogServiceClient catalogServiceClient )
         {
-            _logger = logger;
+            _catalogServiceClient = catalogServiceClient;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var products = await _catalogServiceClient.GetAllProductsAsync();
+            return View(products);
         }
 
         public IActionResult Privacy()
