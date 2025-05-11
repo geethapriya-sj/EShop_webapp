@@ -1,11 +1,11 @@
 ﻿{
    "CodeGenerationMode": 5,
-   "ContextClassName": "CartServiceContext",
+   "ContextClassName": "CartServiceDbContext",
    "ContextNamespace": null,
    "FilterSchemas": false,
    "IncludeConnectionString": false,
    "ModelNamespace": null,
-   "OutputContextPath": ".\/Persistance",
+   "OutputContextPath": ".\/Persistence",
    "OutputPath": "Models",
    "PreserveCasingWithRegex": true,
    "ProjectRootNamespace": "CartService.Infrastructure",

@@ -1,31 +1,36 @@
-﻿using AuthService.Application.DTO.Mappers;
-using CatalogService.Application.Mappers;
-using CatalogService.Application.Repositories;
-using CatalogService.Application.Services.Abstraction;
-using CatalogService.Application.Services.Implementation;
-using CatalogService.Infrastructure.Persistance;
-using CatalogService.Infrastructure.Persistance.Repositories;
+﻿using CatalogService.Application.Repositories;
+using CatalogService.Application.Services.Abstractions;
+using CatalogService.Application.Services.Implementations;
+using CatalogService.Infrastructure.Persistence;
+using CatalogService.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace CatalogService.Infrastructure
 {
     public class ServiceRegistration
     {
-        public static void RegisteredServices(IServiceCollection services, IConfiguration configuration)
-        {
-            //database context
-            services.AddDbContext<CatalogDBContext>(options =>
-                         options.UseSqlServer(configuration.GetConnectionString("CatalogDb")));
-            //repositories
+        public static void RegisterServices(IServiceCollection services, IConfiguration configuration) {
+            string connctionString = configuration.GetConnectionString("DbConnection");
+            services.AddDbContext<CatalogServiceDbContext>(options =>
+            {
+                options.UseSqlServer(connctionString);
+            });
+
+            //Repositories
             services.AddScoped<IProductRepository, ProductRepository>();
 
-            //services
+            //Services
             services.AddScoped<IProductAppService, ProductAppService>();
 
-            //automapper
-            services.AddAutoMapper(typeof(ProductMapper));
+            //AutoMapper
+            services.AddAutoMapper(typeof(Application.Mappers.ProductMappers));
         }
     }
 }

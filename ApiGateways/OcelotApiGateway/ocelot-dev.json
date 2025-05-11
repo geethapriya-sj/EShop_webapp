@@ -1,4 +1,4 @@
-{
+﻿{
   "Routes": [
     {
       "DownstreamPathTemplate": "/api/auth/{everything}",
@@ -6,42 +6,38 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 7116
+          "Port": 7209
         }
       ],
       "UpstreamPathTemplate": "/auth/{everything}",
       "UpstreamHttpMethod": [ "Post" ]
     },
-
     {
-      "DownstreamPathTemplate": "/api/ProductCatalog/{everything}",
+      "DownstreamPathTemplate": "/api/catalog/{everything}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 7174
+          "Port": 7032
         }
       ],
-      "UpstreamPathTemplate": "/ProductCatalog/{everything}",
-      "UpstreamHttpMethod": [ "Post", "Get" ]
+      "UpstreamPathTemplate": "/catalog/{everything}",
+      "UpstreamHttpMethod": [ "Get" ]
     },
-
     {
       "DownstreamPathTemplate": "/api/cart/{everything}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 7051
+          "Port": 7186
         }
       ],
       "UpstreamPathTemplate": "/cart/{everything}",
-      "UpstreamHttpMethod": [ "Post", "Get" , "PUT" , "DELETE"]
-    } 
-
-
+      "UpstreamHttpMethod": [ "Get", "Post","Delete","Put" ]
+    }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:72324"
+    "BaseUrl": "https://localhost:7199"
   }
 }

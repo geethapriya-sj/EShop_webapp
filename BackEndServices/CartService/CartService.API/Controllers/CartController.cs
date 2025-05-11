@@ -1,11 +1,12 @@
 ﻿using CartService.Application.DTOs;
-using CartService.Application.Service.Abstractions;
-using CartService.Domain.Models;
+using CartService.Application.Services.Abstractions;
+using CartService.Domain.Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CartService.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class CartController : ControllerBase
     {
@@ -15,7 +16,7 @@ namespace CartService.API.Controllers
             _cartService = cartAppService;
         }
 
-        [HttpGet("GetUserCart/{UserId}")]
+        [HttpGet("{UserId}")]
         public async Task<IActionResult> GetUserCart(long UserId)
         {
             var cart = await _cartService.GetUserCart(UserId);

@@ -1,4 +1,5 @@
-﻿using CartService.Domain.Models;
+﻿using CartService.Domain.Entities;
+
 
 namespace CartService.Application.Repositories
 {
@@ -12,6 +13,5 @@ namespace CartService.Application.Repositories
         int DeleteItem(long CartId, int ItemId);
         bool MakeInActive(long CartId);
         int UpdateQuantity(long CartId, int ItemId, int Quantity);
-
     }
 }

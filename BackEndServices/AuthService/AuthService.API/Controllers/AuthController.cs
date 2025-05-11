@@ -1,10 +1,13 @@
-﻿using AuthService.Application.DTO;
+﻿using AuthService.Application.DTOs;
 using AuthService.Application.Services.Abstractions;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuthService.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -14,7 +17,7 @@ namespace AuthService.API.Controllers
             _userAppService = userAppService;
         }
 
-        [HttpPost("Login")]
+        [HttpPost]
         public IActionResult Login([FromBody] LoginDTO loginDTO)
         {
             var user = _userAppService.LoginUser(loginDTO);
@@ -22,25 +25,18 @@ namespace AuthService.API.Controllers
             {
                 return Ok(user);
             }
-            else
-            {
-                return Unauthorized();
-            }
+            return BadRequest("Invalid credentials");
         }
 
-        [HttpPost("Register")]
+        [HttpPost]
         public IActionResult Register([FromBody] SignUpDTO signUpDTO)
         {
-            var isRegistered = _userAppService.RegisterUser(signUpDTO);
-            if (isRegistered)
+            var result = _userAppService.RegisterUser(signUpDTO);
+            if (result)
             {
                 return Ok("User registered successfully");
             }
-            else
-            {
-                return BadRequest("User already exists");
-            }
-        }
-
+            return BadRequest("User registration failed");
+        }       
     }
 }

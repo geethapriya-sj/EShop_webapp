@@ -9,14 +9,12 @@ namespace CatalogService.Application.Repositories
 {
     public interface IProductRepository
     {
-        IEnumerable<Product> GetAllProducts();
-
-        Product GetProductById(int id);
-        void AddProduct(Product product);
-        void UpdateProduct(Product product);
-
-        void DeleteProduct(int id);
-
+        IEnumerable<Product> GetAll();
+        Product GetById(int id);
+        void Add(Product product);
+        void Update(Product product);
+        void Delete(int id);
         int SaveChanges();
+        IEnumerable<Product> GetByIds(int[] ids);
     }
 }

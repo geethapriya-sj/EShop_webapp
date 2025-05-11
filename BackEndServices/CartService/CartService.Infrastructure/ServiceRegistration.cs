@@ -1,29 +1,30 @@
-﻿using CartService.Application.Mappers;
-using CartService.Application.Repositories;
-using CartService.Application.Service.Abstractions;
-using CartService.Application.Service.Implementation;
-using CartService.Infrastructure.Persistance;
-using CartService.Infrastructure.Persistance.Repositories;
-using Microsoft.EntityFrameworkCore;
+﻿using CartService.Application.Repositories;
+using CartService.Infrastructure.Persistence.Repositories;
+using CartService.Infrastructure.Persistence;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using CartService.Application.Services.Abstractions;
+using CartService.Application.Services.Implementations;
 
 namespace CartService.Infrastructure
 {
     public class ServiceRegistration
     {
-        public static void registerServices(IServiceCollection services, IConfiguration configuration)
+        public static void RegisterServices(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddAutoMapper(typeof(CartMapper));
+            //DBContext
+            string ConnectionString = configuration.GetConnectionString("DbConnection");
+            services.AddDbContext<CartServiceDbContext>(options => options.UseSqlServer(ConnectionString));
+
+            //Repositories
             services.AddScoped<ICartRepository, CartRepository>();
+
+            //Services
             services.AddScoped<ICartAppService, CartAppService>();
-            services.AddDbContext<CartServiceContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("CartDB")));
+
+            //AutoMapper
+            services.AddAutoMapper(typeof(Application.Mappers.CartMapper));
         }
     }
 }

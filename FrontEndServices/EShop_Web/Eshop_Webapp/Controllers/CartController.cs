@@ -7,13 +7,27 @@ namespace Eshop_Webapp.Controllers
     public class CartController : BaseController
     {
         private CartServiceClient _cartserviceClient;
-        public CartController()
+        public CartController(CartServiceClient cartServiceClient)
         {
-
+            _cartserviceClient = cartServiceClient;
         }
         public IActionResult Index()
         {
-            return View();
+            if(CurrentUser == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            else
+            {
+                var cart = _cartserviceClient.GetCartAsync(CurrentUser.UserId).Result;
+                if (cart != null)
+                {
+                    return View(cart);
+                }
+                else
+                {
+                    return View(new CartModel());
+                }
         }
     }
 }

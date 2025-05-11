@@ -1,7 +1,6 @@
-@CartService.API_HostAddress = https://localhost:7051/api
-@CartService.API_HostAddress_1 = http://localhost:5127/api
+@CartService.API_HostAddress = https://localhost:7186/api
 
-GET {{CartService.API_HostAddress}}/Cart/GetUserCart/1
+GET {{CartService.API_HostAddress}}/cart/GetUserCart/1
 Accept: application/json
 
 ###

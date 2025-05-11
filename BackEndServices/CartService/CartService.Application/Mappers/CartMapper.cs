@@ -1,15 +1,11 @@
 ﻿using AutoMapper;
 using CartService.Application.DTOs;
-using CartService.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using CartService.Domain.Entities;
+
 
 namespace CartService.Application.Mappers
 {
-    public class CartMapper: Profile
+    public class CartMapper : Profile
     {
         public CartMapper()
         {
@@ -17,5 +13,4 @@ namespace CartService.Application.Mappers
             CreateMap<CartItem, CartItemDTO>().ReverseMap();
         }
     }
-   
 }

@@ -26,6 +26,15 @@ builder.Services.AddScoped<CatalogServiceClient>(provider =>
     return new CatalogServiceClient(httpClient);
 }
 );
+
+builder.Services.AddScoped<CartServiceClient>(provider =>
+{
+    var httpClientFactory = provider.GetRequiredService<IHttpClientFactory>();
+    var httpClient = httpClientFactory.CreateClient("HttpClient");
+    return new CartServiceClient(httpClient);
+}
+);
+
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {

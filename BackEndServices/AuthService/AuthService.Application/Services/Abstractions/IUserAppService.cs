@@ -1,4 +1,4 @@
-﻿using AuthService.Application.DTO;
+﻿using AuthService.Application.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +9,7 @@ namespace AuthService.Application.Services.Abstractions
 {
     public interface IUserAppService
     {
-        bool RegisterUser(SignUpDTO signUpDTO);
-
         UserDTO LoginUser(LoginDTO loginDTO);
+        bool RegisterUser(SignUpDTO signUpDTO);
     }
 }

@@ -1,26 +1,20 @@
-@AuthService.API_HostAddress = http://localhost:5118/api
+@AuthService.API_HostAddress = https://localhost:7209/api
 
-
-### Register User
-POST {{AuthService.API_HostAddress}}/auth/Register
+POST {{AuthService.API_HostAddress}}/auth/login
 Accept: application/json
-content-Type:application/json
-{
-  "email":"priya@gmail.com",
-  "password":"User@12345678",
-  "role":"User",
-  "phoneNumber":"User@12345678",
-  "name":"Priya"
-}
-
-### Login User
-POST {{AuthService.API_HostAddress}}/auth/Login
-Accept: application/json
-content-Type:application/json
+Content-Type: application/json
 {
   "email":"user@gmail.com",
   "password":"User@12345678"
 }
-
-
 ###
+POST {{AuthService.API_HostAddress}}/auth/register
+Accept: application/json
+Content-Type: application/json
+{
+  "name":"Mohan",
+  "email":"mohan@gmail.com",
+  "password":"User@12345678",
+  "phoneNumber":"9876543210",
+  "role":"User"
+}

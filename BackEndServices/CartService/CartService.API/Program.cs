@@ -1,3 +1,4 @@
+using CartService.Application.HttpClients;
 using CartService.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,7 +9,19 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-ServiceRegistration.registerServices(builder.Services, builder.Configuration);
+
+builder.Services.AddHttpClient("HttpClient", client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["ApiAddress:Catalog"]);
+});
+builder.Services.AddScoped<CatalogServiceClient>(provider =>
+{
+    var httpClientFactory = provider.GetRequiredService<IHttpClientFactory>();
+    var httpClient = httpClientFactory.CreateClient("HttpClient");
+    return new CatalogServiceClient(httpClient);
+});
+
+ServiceRegistration.RegisterServices(builder.Services, builder.Configuration);
 
 var app = builder.Build();
 
