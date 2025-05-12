@@ -10,22 +10,19 @@ using System.Text;
 
 namespace PaymentService.Application.Services.Implementations
 {
-   
     public class PaymentAppService : IPaymentAppService
     {
-        readonly RazorpayClient _client;
+        RazorpayClient _client;
         IConfiguration _configuration;
         IPaymentRepository _paymentRepository;
         IMapper _mapper;
-
-        public PaymentAppService(IConfiguration configuration, IPaymentRepository paymentRepository, IMapper mapper)
+        public PaymentAppService(IPaymentRepository paymentRepository, IConfiguration configuration, IMapper mapper)
         {
-            _configuration = configuration;
             _paymentRepository = paymentRepository;
+            _configuration = configuration;
             _mapper = mapper;
             _client = new RazorpayClient(_configuration["RazorPay:Key"], _configuration["RazorPay:Secret"]);
         }
-
         private static string getActualSignature(string payload, string secret)
         {
             byte[] secretBytes = StringEncode(secret);
@@ -46,11 +43,6 @@ namespace PaymentService.Application.Services.Implementations
             return BitConverter.ToString(hash).Replace("-", "").ToLower();
         }
 
-        /// <summary>
-        /// Create Order
-        /// </summary>
-        /// <param name="order"></param>
-        /// <returns></returns>
         public string CreateOrder(RazorPayOrderDTO order)
         {
             Dictionary<string, object> options = new Dictionary<string, object>();

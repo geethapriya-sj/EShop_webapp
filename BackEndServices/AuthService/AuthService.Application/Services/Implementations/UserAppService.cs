@@ -33,7 +33,7 @@ namespace AuthService.Application.Services.Implementations
             User user = _userRepository.GetUserByEmail(loginDTO.Email).Result;
             if (user != null)
             {
-                bool isValidPassword = true; // BC.Verify(loginDTO.Password, user.Password);
+                bool isValidPassword = BC.Verify(loginDTO.Password, user.Password);
                 if (isValidPassword)
                 {
                     UserDTO userDTO = _mapper.Map<UserDTO>(user);

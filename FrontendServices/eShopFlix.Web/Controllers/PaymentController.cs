@@ -2,40 +2,48 @@
 using eShopFlix.Web.HttpClients;
 using eShopFlix.Web.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace eShopFlix.Web.Controllers
 {
     public class PaymentController : BaseController
     {
-        readonly CartServiceClient _cartServiceClient;
-        readonly IConfiguration _configuration;
-        readonly PaymentServiceClient _paymentServiceClient;
-        public PaymentController(CartServiceClient cartServiceClient,PaymentServiceClient paymentServiceClient, IConfiguration configuration)
+        CartServiceClient _cartServiceClient;
+        PaymentServiceClient _paymentServiceClient;
+        IConfiguration _configuration;
+        public PaymentController(CartServiceClient cartServiceClient, IConfiguration configuration, PaymentServiceClient paymentServiceClient)
         {
             _cartServiceClient = cartServiceClient;
             _configuration = configuration;
+            _paymentServiceClient = paymentServiceClient;
         }
 
         public IActionResult Index()
         {
             CartModel cartModel = _cartServiceClient.GetUserCartAsync(CurrentUser.UserId).Result;
-            if (cartModel != null) { 
+            if (cartModel != null)
+            {
                 PaymentModel payment = new PaymentModel();
                 payment.Cart = cartModel;
                 payment.Currency = "INR";
                 payment.Description = string.Join(",", cartModel.CartItems.Select(x => x.Name));
                 payment.GrandTotal = cartModel.GrandTotal;
+                payment.RazorpayKey = _configuration["Razorpay:Key"];
+
+                //creating razorpay order
                 RazorPayOrderModel razorpayOrder = new RazorPayOrderModel
                 {
-                     Amount = Convert.ToInt32(payment.GrandTotal * 100),
-                     Currency = payment.Currency,
-                     Receipt = payment.Receipt
+                    Amount = Convert.ToInt32(payment.GrandTotal * 100),
+                    Currency = payment.Currency,
+                    Receipt = Guid.NewGuid().ToString()
                 };
                 payment.OrderId = _paymentServiceClient.CreateOrderAsync(razorpayOrder).Result;
+
                 return View(payment);
             }
-            return RedirectToAction("Index","Cart");
+            return RedirectToAction("Index", "Cart");
         }
+
         public async Task<IActionResult> Status(IFormCollection form)
         {
             if (!string.IsNullOrEmpty(form["rzp_paymentid"]))
@@ -89,5 +97,6 @@ namespace eShopFlix.Web.Controllers
             TransactionModel model = TempData.Get<TransactionModel>("Receipt");
             return View(model);
         }
+
     }
 }

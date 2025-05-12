@@ -7,7 +7,7 @@ namespace PaymentService.Application.Services.Abstractions
     {
         string CreateOrder(RazorPayOrderDTO order);
         Payment GetPaymentDetails(string paymentId);
-        bool SavePaymentDetails(PaymentDetailDTO model);
         string VerifyPayment(PaymentConfirmDTO payment);
+        bool SavePaymentDetails(PaymentDetailDTO model);
     }
 }

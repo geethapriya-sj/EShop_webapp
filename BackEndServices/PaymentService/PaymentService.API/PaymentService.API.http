@@ -1,6 +1,11 @@
-@PaymentService.API_HostAddress = http://localhost:5135
+@PaymentService.API_HostAddress = https://localhost:7027/api
 
-GET {{PaymentService.API_HostAddress}}/weatherforecast/
+POST {{PaymentService.API_HostAddress}}/payment/CreateOrder
 Accept: application/json
-
+Content-Type:application/json
+{
+  "Amount":1000,
+  "Currency":"INR",
+  "Receipt":"hi"
+}
 ###

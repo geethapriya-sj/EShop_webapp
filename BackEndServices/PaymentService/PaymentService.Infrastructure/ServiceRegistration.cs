@@ -6,11 +6,6 @@ using PaymentService.Application.Services.Abstractions;
 using PaymentService.Application.Services.Implementations;
 using PaymentService.Infrastructure.Persistence;
 using PaymentService.Infrastructure.Persistence.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PaymentService.Infrastructure
 {
